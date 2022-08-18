@@ -1,0 +1,24 @@
+version: '3.3'
+services: 
+  pccs:
+    image: ghcr.io/edgelesssys/pccs
+    environment:
+      APIKEY: d3ae0400e4a84529a69efbb449ba25e4
+    ports:
+      - "8081:8081"
+  ego:
+    depends_on:
+      - pccs
+    build: ego/.
+    environment:
+      VERSION: 1.0.0
+    devices:
+      - "/dev/sgx_enclave:dev/sgx_enclave"
+      - "/dev/sgx_provision:/dev/sgx_provision"
+      - "/dev/sgx_vepc:/dev/sgx_vepc"
+
+
+
+  
+    
+#  --device /dev/sgx_enclave --device /dev/sgx_provision --device /dev/sgx_vepc
