@@ -1,7 +1,7 @@
 FROM eerikas/ego:1.0.1
-WORKDIR /server
+WORKDIR /workdir
 COPY . .
-RUN ego-go build -o server
-RUN ego sign
+RUN cd server && ego-go build && ego sign
+RUN cd client && ego-go build && ego sign
 CMD [ "ego", "run", "server" ]
 # ENTRYPOINT ["tail", "-f", "/dev/null"]

@@ -25,9 +25,11 @@
 version: '3.3'
 services:
   server:
-    build: local_attestation/server/.
+    build: local_attestation/Dockerfile.server
     environment:
       HOST: server
+    volumes:
+      - "./local_attestation:/workdir:rw"
     devices:
       - "/dev/sgx_enclave:dev/sgx_enclave"
       - "/dev/sgx_provision:/dev/sgx_provision"
@@ -36,9 +38,11 @@ services:
   client:
     depends_on:
       - server
-    build: local_attestation/client/.
+    build: local_attestation/Dockerfile.client
     environment:
       HOST: server
+    volumes:
+      - "./local_attestation:/workdir:rw"
     devices:
       - "/dev/sgx_enclave:dev/sgx_enclave"
       - "/dev/sgx_provision:/dev/sgx_provision"
