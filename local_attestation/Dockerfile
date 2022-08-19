@@ -3,4 +3,3 @@ WORKDIR /workdir
 COPY . .
 RUN cd server && ego-go build && ego sign
 RUN cd client && ego-go build && ego sign
-CMD [ "ego", "run", "server/server" ]
