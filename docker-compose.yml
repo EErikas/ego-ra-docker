@@ -25,8 +25,7 @@
 version: '3.3'
 services:
   server:
-    build: local_attestation/.
-    command: [ "ego", "run", "server/server" ]
+    build: local_attestation/Dockerfile.server
     environment:
       HOST: server
     volumes:
@@ -39,8 +38,7 @@ services:
   client:
     depends_on:
       - server
-    build: local_attestation/.
-    command: [ "ego", "run", "client/client" ]
+    build: local_attestation/Dockerfile.client
     environment:
       HOST: server
     volumes:
