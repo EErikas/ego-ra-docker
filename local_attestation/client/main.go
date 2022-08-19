@@ -20,11 +20,9 @@ import (
 )
 
 func main() {
-	host := getEnv("HOST", "localhost")
-	attestURL := fmt.Sprintf("http://%s:8080", host)
-	secureURL := fmt.Sprintf("http://%s:8081", host)
-	// const attestURL = "http://localhost:8080"
-	// const secureURL = "https://localhost:8081"
+	fmt.Println("New client is here")
+	const attestURL = "http://server:8080"
+	const secureURL = "https://server:8081"
 
 	// create client keys
 	privKey, _ := rsa.GenerateKey(rand.Reader, 2048)
@@ -69,13 +67,6 @@ func main() {
 	// use the established secure channel
 	resp := httpGet(tlsConfig, secureURL+"/ping")
 	fmt.Printf("server responded: %s\n", resp)
-}
-
-func getEnv(key, fallback string) string {
-	if value, ok := os.LookupEnv(key); ok {
-		return value
-	}
-	return fallback
 }
 
 func verifyReport(reportBytes []byte, cert []byte) error {

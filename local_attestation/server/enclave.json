@@ -1,14 +1,8 @@
 {
     "exe": "server",
-    "key": "private.pem",
+    "key": "../private.pem",
     "debug": true,
     "heapSize": 512,
     "productID": 2,
-    "securityVersion": 1,
-    "env": [
-        {
-            "name": "HOST",
-            "value": "server"
-        }
-    ]
+    "securityVersion": 1
 }

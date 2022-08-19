@@ -16,7 +16,6 @@ import (
 	"io"
 	"math/big"
 	"net/http"
-	"os"
 	"time"
 
 	"github.com/edgelesssys/ego/enclave"
@@ -40,12 +39,6 @@ func main() {
 	fmt.Println(err)
 }
 
-func getEnv(key, fallback string) string {
-	if value, ok := os.LookupEnv(key); ok {
-		return value
-	}
-	return fallback
-}
 func newAttestServer(cert []byte, privKey crypto.PrivateKey) *http.Server {
 	certHash := sha256.Sum256(cert)
 	mux := http.NewServeMux()
@@ -86,7 +79,7 @@ func newAttestServer(cert []byte, privKey crypto.PrivateKey) *http.Server {
 	})
 
 	return &http.Server{
-		Addr:    fmt.Sprintf("%s:8080", getEnv("HOST", "localhost")),
+		Addr:    "server:8080",
 		Handler: mux,
 	}
 }
@@ -101,7 +94,7 @@ func newSecureServer(cert []byte, privKey crypto.PrivateKey) *http.Server {
 	clientCAs.AddCert(parsedCert)
 
 	return &http.Server{
-		Addr:    fmt.Sprintf("%s:8081", getEnv("HOST", "localhost")),
+		Addr:    "server:8081",
 		Handler: mux,
 		TLSConfig: &tls.Config{
 			Certificates: []tls.Certificate{
@@ -156,7 +149,7 @@ func createServerCertificate() ([]byte, crypto.PrivateKey) {
 		NotAfter:              time.Now().Add(time.Hour),
 		BasicConstraintsValid: true,
 		IsCA:                  true,
-		DNSNames:              []string{getEnv("HOST", "localhost")},
+		DNSNames:              []string{"server"},
 	}
 	priv, _ := rsa.GenerateKey(rand.Reader, 2048)
 	cert, _ := x509.CreateCertificate(rand.Reader, template, template, &priv.PublicKey, priv)

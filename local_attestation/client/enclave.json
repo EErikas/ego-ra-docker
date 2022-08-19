@@ -4,11 +4,5 @@
     "debug": true,
     "heapSize": 512,
     "productID": 3,
-    "securityVersion": 1,
-    "env": [
-        {
-            "name": "HOST",
-            "value": "server"
-        }
-    ]
+    "securityVersion": 1
 }
